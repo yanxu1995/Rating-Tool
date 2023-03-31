@@ -57,18 +57,21 @@ def stop_recording():
     recording = False
 
 def print_pointer():
-    log_file = 'C:/temp/log.txt'
+    current_dir = os.getcwd()
+    log_file = './log.txt'
     if not os.path.exists(log_file):
         with open(log_file, 'w'):
-            print('C:/temp/log.txt has been created')
+            print(f'File {current_dir} {log_file}  has been created')
             pass
+    else:
+        print(f'File {current_dir} {log_file} already exists')
 
     with open(log_file, 'a') as f:
         while True:
             if recording:
                 with records_lock:
                     records.append((pointer, time.time()))
-                    print(f"Pointer is at {ratings[pointer]}")
+                    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Pointer is at {ratings[pointer]}")
                     log_msg = f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Pointer is at {ratings[pointer]}\n"
                     f.write(log_msg)
                     f.flush()  
